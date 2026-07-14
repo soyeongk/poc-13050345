@@ -1,0 +1,11 @@
+{
+  "project": "poc",
+  "members": [
+    "Sarah",
+    "Alex"
+  ],
+  "meta": {
+    "version": 1,
+    "active": true
+  }
+}
