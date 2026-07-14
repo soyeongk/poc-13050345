@@ -9,6 +9,7 @@ json_parser.py에서 사용한 json.load/dump 패턴을 그대로 재사용합�
 """
 
 import json
+import shutil
 from pathlib import Path
 
 CONTACTS_FILE = Path(__file__).parent / "contacts.json"
@@ -20,7 +21,16 @@ def load_contacts():
     if not CONTACTS_FILE.exists():
         return []
     with CONTACTS_FILE.open("r", encoding="utf-8") as f:
-        return json.load(f)
+        try:
+            return json.load(f)
+        except json.JSONDecodeError as e:
+            backup_path = CONTACTS_FILE.with_suffix(".json.bak")
+            shutil.copy(CONTACTS_FILE, backup_path)
+            print(
+                f"경고: {CONTACTS_FILE.name} 파일이 손상되어 읽을 수 없습니다 ({e}). "
+                f"손상된 파일은 {backup_path.name}으로 백업하고 빈 목록으로 시작합니다."
+            )
+            return []
 
 
 def save_contacts(contacts):
