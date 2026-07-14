@@ -48,16 +48,6 @@ def demo_save_and_load_file():
     assert loaded == data  # 저장 전/후 데이터가 동일한지 확인
 
 
-def demo_error_handling():
-    # 잘못된 JSON 문자열 (trailing comma는 JSON 스펙 위반)
-    broken = '{"a": 1, "b": 2,}'
-    try:
-        json.loads(broken)
-    except json.JSONDecodeError as e:
-        print(f"\n파싱 실패 (의도된 예시): {e}")
-
-
 if __name__ == "__main__":
     demo_loads_and_dumps()
     demo_save_and_load_file()
-    demo_error_handling()
